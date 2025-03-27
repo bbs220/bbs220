@@ -1,0 +1,3 @@
+- 👋 Hi, I’m @bbs220
+- 👀 I’m interested in web dev and game dev
+- 🌱 I’m currently learning godot and unity
