@@ -1,4 +1,5 @@
 - 👋 Hi, I’m @bbs220
 - 👀 I’m interested in web dev 
-- 🌱 I’m currently learning `NextJS`, `Tailwind`, `Server Components` and a bunch of other stuff
+- 🌱 I’m currently using `NextJS`, `Tailwind`, `Server Components` and a bunch of other stuff
 - ⚙️ I like mostly backend stuff 
+- 🤗 Always up for new challenges
