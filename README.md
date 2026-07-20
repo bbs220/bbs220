@@ -1,5 +1,5 @@
 # 🎉 [Portfolio](https://bbs-pf.vercel.app/)
-**⚠️ NOTE**: Be sure to click the `// Drive` button at the bottom of the page!
+**⚠️ NOTE**: Be sure to click the `// Drive` button at the bottom of the portfolio's page!
 
 ## About Me:
 - 👋 Hi, I’m @bbs220
