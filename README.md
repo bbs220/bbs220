@@ -4,6 +4,6 @@
 ## About Me:
 - 👋 Hi, I’m @bbs220
 - 👀 I’m interested in web dev 
-- 🌱 I’m currently using `NextJS`, `Tailwind`, `Server Components` and a bunch of other stuff
-- ⚙️ I like mostly backend stuff 
+- 🌱 I’m currently using `Three.js`, `Next.js`, `Tailwind`, `Server Components` and a bunch of other stuff
+- ⚙️ I like mostly backend stuff and fancy websites like [these](https://www.shopify.com/ca/editions/summer2025/drive)!
 - 🤗 Always up for new challenges
