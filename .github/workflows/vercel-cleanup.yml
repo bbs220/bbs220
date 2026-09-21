@@ -1,0 +1,25 @@
+name: Global Vercel Cleanup
+
+on:
+  schedule:
+    # runs every day at midnight UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch: # to trigger it manually via a button
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # modern Node for native fetch
+
+      - name: Run Cleanup Script
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_IDS: ${{ secrets.VERCEL_PROJECT_IDS }}
+        run: node scripts/clean-multiple-vercel.js
