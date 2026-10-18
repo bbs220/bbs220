@@ -1,13 +1,15 @@
 // Usage:
-// \$env:VERCEL_TOKEN="your_vercel_token_here"
-// \$env:VERCEL_PROJECT_IDS="prj_yourFirstId,prj_yourSecondId"
+// $env:VERCEL_TOKEN="your_vercel_token_here"
+// $env:VERCEL_PROJECT_IDS="prj_yourFirstId,prj_yourSecondId"
 // node clean-multiple-vercel.js
 
 const TOKEN = process.env.VERCEL_TOKEN;
 const PROJECT_IDS_RAW = process.env.VERCEL_PROJECT_IDS;
 
 if (!TOKEN || !PROJECT_IDS_RAW) {
-  console.error("❌ Missing VERCEL_TOKEN or VERCEL_PROJECT_IDS environment variables");
+  console.error(
+    "❌ Missing VERCEL_TOKEN or VERCEL_PROJECT_IDS environment variables",
+  );
   process.exit(1);
 }
 
@@ -34,7 +36,10 @@ async function cleanProject(projectId) {
     });
 
     if (!response.ok) {
-      console.error(`❌ Failed to fetch deployments for ${projectId}:`, await response.text());
+      console.error(
+        `❌ Failed to fetch deployments for ${projectId}:`,
+        await response.text(),
+      );
       return;
     }
 
@@ -51,7 +56,9 @@ async function cleanProject(projectId) {
 
       // Protect deployments that are currently building or queued
       if (dep.state === "BUILDING" || dep.state === "QUEUED") {
-        console.log(`⏳ Skipping ${isProd ? "PROD" : "PREVIEW"}: ${dep.uid} (Currently ${dep.state})`);
+        console.log(
+          `⏳ Skipping ${isProd ? "PROD" : "PREVIEW"}: ${dep.uid} (Currently ${dep.state})`,
+        );
         continue;
       }
 
@@ -63,23 +70,30 @@ async function cleanProject(projectId) {
       }
 
       // Delete everything else (older prods, failed prods, and ALL previews)
-      console.log(`🗑️  Deleting ${isProd ? "PROD" : "PREVIEW"}: ${dep.uid} (${dep.state})`);
-      
-      const delRes = await fetch(`https://api.vercel.com/v13/deployments/${dep.uid}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${TOKEN}` },
-      });
+      console.log(
+        `🗑️  Deleting ${isProd ? "PROD" : "PREVIEW"}: ${dep.uid} (${dep.state})`,
+      );
+
+      const delRes = await fetch(
+        `https://api.vercel.com/v13/deployments/${dep.uid}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${TOKEN}` },
+        },
+      );
 
       if (!delRes.ok) {
         if (delRes.status === 429) {
           console.warn(`⚠️ Rate limited by Vercel. Pausing for 5 seconds...`);
           await sleep(5000); // Wait 5 seconds before continuing
         } else {
-          console.error(`   -> ⚠️ Failed to delete ${dep.uid}: ${delRes.statusText}`);
+          console.error(
+            `   -> ⚠️ Failed to delete ${dep.uid}: ${delRes.statusText}`,
+          );
         }
       } else {
         // Small delay to be gentle on the Vercel API
-        await sleep(200); 
+        await sleep(200);
       }
     }
 
