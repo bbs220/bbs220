@@ -20,6 +20,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function cleanProject(projectId) {
   let keptProd = false;
+  let keptPreview = false; // Added to track the latest preview
   let until = null;
   let hasMore = true;
 
@@ -69,7 +70,14 @@ async function cleanProject(projectId) {
         continue;
       }
 
-      // Delete everything else (older prods, failed prods, and ALL previews)
+      // Keep the very first (latest) READY preview build
+      if (!isProd && dep.state === "READY" && !keptPreview) {
+        console.log(`✅ Keeping latest READY PREVIEW: ${dep.uid} (${dep.url})`);
+        keptPreview = true;
+        continue;
+      }
+
+      // Delete everything else (older prods, failed prods, and older previews)
       console.log(
         `🗑️  Deleting ${isProd ? "PROD" : "PREVIEW"}: ${dep.uid} (${dep.state})`,
       );
@@ -79,7 +87,7 @@ async function cleanProject(projectId) {
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${TOKEN}` },
-        },
+        }
       );
 
       if (!delRes.ok) {
